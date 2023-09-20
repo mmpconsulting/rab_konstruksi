@@ -1,0 +1,24 @@
+<odoo>
+    <data>
+        <record id="seq_bp_rab_master_category" model="ir.sequence">
+            <field name="name">Master Category</field>
+            <field name="code">bp_rab.master_category</field>
+            <field name="prefix">C</field>
+            <field name="padding">4</field>
+        </record>
+        <record id="seq_bp_rab_master_formula" model="ir.sequence">
+            <field name="name">Master Formula</field>
+            <field name="code">bp_rab.master_formula</field>
+            <field name="prefix">F</field>
+            <field name="padding">4</field>
+        </record>
+        <record id="seq_bp_rab_rab" model="ir.sequence">
+            <field name="name">RAB</field>
+            <field name="code">bp_rab.rab</field>
+            <field name="prefix">RAB-%(y)s%(month)s</field>
+            <field name="padding">2</field>
+            <field name="use_date_range">True</field>
+            <!-- <field name="range_reset">monthly</field> -->
+        </record>
+    </data>
+</odoo>

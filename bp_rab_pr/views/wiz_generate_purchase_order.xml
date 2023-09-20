@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="bp_pr_wiz_generate_purchase_order_list_rab" model="ir.ui.view">
+            <field name="name">bp_pr_wiz_generate_purchase_order_list_rab</field>
+            <field name="model">bp_pr.wiz_generate_purchase_order</field>
+            <field name="priority">10</field>
+            <field name="inherit_id" ref="bp_purchase_request.wiz_generate_purchase_order_list"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_po']" position="before">
+                    <field name="rab_id" readonly="1"/>
+                </xpath>
+                
+            </field>
+        </record>
+
+    </data>
+</odoo>

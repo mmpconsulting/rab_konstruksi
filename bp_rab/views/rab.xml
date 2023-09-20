@@ -1,0 +1,302 @@
+<openerp>
+    <data>
+        <!-- === RAB === -->
+        <record id="rab_list" model="ir.ui.view">
+            <field name="name">rab_list</field>
+            <field name="model">bp_rab.rab</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <tree string="Project">
+                    <field name="rab_date" string = "Date"/>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="number"/>
+                    <field name="lokasi"/>
+                    <field name="total" sum="Grand Total"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="rab_form" model="ir.ui.view">
+            <field name="name">rab_form</field>
+            <field name="model">bp_rab.rab</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <form string="Project">
+                    <header>
+                        <button string="Create SO" type="object" name="action_create_so" attrs="{'invisible':['|',('state', '=', 'draft'),('qty_sale_order','>',0)]}" class="oe_highlight" ></button>
+                        <button string="Draft" type="object" name="action_draft" states="rab"></button>
+                        <button string="Confirm" type="object" class="oe_highlight" name="create_ram_raj" states="draft"></button>
+                        <button string="Finish" type="object" class="oe_highlight" name="action_finish" states="rab"></button>
+                        <button string="Cancel" type="object" name="action_cancel" states="draft"></button>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,rab,finish"/>
+                    </header>
+                    <sheet>
+                        <field name="id" invisible="1"/>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" type="object" name="show_sale_order" icon="fa-line-chart" attrs="{'invisible':[('qty_sale_order','=',0)]}">
+                                <field string="S. Order" name="qty_sale_order" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <div name="name" class="oe_title">
+                            <label for="name" class="oe_edit_only" string="Pekerjaan"/>
+                            <h1><field name="name"/></h1>
+                            <field name="number" readonly="1"/>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="rab_date"/>
+                                <field name="partner_id"/>
+                                <field name="lokasi"/>
+                            </group>
+                            <group>
+                                <field name="due_date"/>
+                                <field name="total"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Formula">
+                                <field name="formula_ids" attrs="{'readonly':[('state','!=','draft')]}">
+                                    <tree string="Formula">
+                                        <field name="name"/>
+                                        <field name="margin" optional="show"/>
+                                        <field name="jumlah" optional="show"/>
+                                        <field name="margin_value" optional="show"/>
+                                        <field name="hsp"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Price">
+                                <button string="Get Price" type="object" class="oe_highlight" name="get_price" attrs="{'invisible':[('state','!=','draft')]}"></button> <![CDATA[&nbsp;]]>
+                                <button string="Update Price" type="object" class="oe_highlight" name="update_price" attrs="{'invisible':[('state','!=','draft')]}"></button>
+                                <field name="formula_product_ids" attrs="{'readonly':[('state','!=','draft')]}">
+                                    <tree string="Price" create="false" delete="false" editable="bottom">
+                                        <field name="product_id" readonly="1"/>
+                                        <field name="type"/>
+                                        <field name="uom_id"/>
+                                        <field name="price"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="RAB">
+                                <field name="rab_pekerjaan_ids" context="{'default_rab_id':id}" attrs="{'readonly':[('state','!=','draft')]}">
+                                    <tree string="RAB" decoration-danger="formula_id==False">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="group_id" optional="hide"/>
+                                        <field name="group_line_id" optional="show"/>
+                                        <field name="name"/>
+                                        <field name="kode_gambar" optional="hide"/>
+                                        <field name="spesifikasi" optional="hide"/>
+                                        <field name="formula_id"/>
+                                        <field name="panjang" optional="hide"/>
+                                        <field name="lebar" optional="hide"/>
+                                        <field name="tinggi" optional="hide"/>
+                                        <field name="unit" optional="hide"/>
+                                        <field name="volume" optional="hide"/>
+                                        <field name="index" optional="hide"/>
+                                        <field name="volume_akhir"/>
+                                        <field name="hsp"/>
+                                        <field name="total"/>
+                                        <field name="bobot"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="RAM">
+                                <field name="rab_product_ram_ids">
+                                    <tree string="RAM" create="false" delete="false">
+                                        <field name="product_id" string="Material"/>
+                                        <field name="qty"/>
+                                        <field name="price"/>
+                                        <field name="total" sum="Grand Total"/>
+                                        <field name="index_qty" optional="hide"/>
+                                        <field name="index_price" optional="hide"/>
+                                        <field name="qty_rap" optional="show"/>
+                                        <field name="price_rap" optional="show"/>
+                                        <field name="total_rap" sum="Grand Total" optional="show"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="RAJ">
+                                <field name="rab_product_raj_ids">
+                                    <tree string="RAJ" create="false" delete="false">
+                                        <field name="product_id" string="Jasa"/>
+                                        <field name="qty"/>
+                                        <field name="price"/>
+                                        <field name="total" sum="Grand Total"/>
+                                         <field name="index_qty" optional="hide"/>
+                                        <field name="index_price" optional="hide"/>
+                                        <field name="qty_rap" optional="show"/>
+                                        <field name="price_rap" optional="show"/>
+                                        <field name="total_rap" sum="Grand Total" optional="show"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="rab_filter" model="ir.ui.view">
+            <field name="name">rab_filter</field>
+            <field name="model">bp_rab.rab</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <search string="Search RAB">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="number"/>
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="group_by_rab_date" string="Date" context="{'group_by': 'rab_date'}"/>
+                        <filter name="group_by_state" string="State" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_rab_list">
+            <field name="name">Projects</field>
+            <field name="res_model">bp_rab.rab</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="rab_filter"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="action_rab_list_tree">
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="rab_list"/>
+            <field name="act_window_id" ref="action_rab_list"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="action_rab_list_form">
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="rab_form"/>
+            <field name="act_window_id" ref="action_rab_list"/>
+        </record>
+
+        <!-- === rab_pekerjaan (RAB)=== -->
+        <record id="rab_pekerjaan_form" model="ir.ui.view">
+            <field name="name">rab_pekerjaan_form</field>
+            <field name="model">bp_rab.rab_pekerjaan</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <form string="RAB">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="group_id" options='{"no_quick_create": 1, "no_create_edit": 1, "no_open":1}'/>
+                                <field name="group_line_id" domain="[('group_id','=',group_id)]" options='{"no_quick_create": 1, "no_create_edit": 1, "no_open":1}'/>
+                                <field name="name"/>
+                                <field name="kode_gambar"/>
+                                <field name="spesifikasi"/>
+                                <field name="formula_id" options='{"no_quick_create": 1, "no_create_edit": 1}' domain="[('rab_id','=',rab_id)]"/>
+                                <field name="bobot" readonly="1"/>
+                                <field name="rab_id" invisible="1"/>      
+                            </group>
+                            <group>
+                                <field name="panjang"/>
+                                <field name="lebar"/>
+                                <field name="tinggi"/>
+                                <field name="unit"/>
+                                <field name="volume"/>
+                                <field name="index"/>
+                                <separator/>
+                                <field name="volume_akhir"/>
+                                <field name="hsp"/>
+                                <field name="total" class="oe_subtotal_footer_separator"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Formula">
+                                <field name="rab_formula_line_ids" readonly="1">
+                                    <tree string="Formula" editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="qty"/>
+                                        <field name="price"/>
+                                        <field name="total"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        
+        <!-- === RAM/RAJ === -->
+        <record id="rab_product_form" model="ir.ui.view">
+            <field name="name">rab_product_form</field>
+            <field name="model">bp_rab.rab_product</field>
+            <field name="arch" type="xml">
+                <form string="Product">
+                    <sheet>
+                        <div name="name" class="oe_title">
+                            <h1><field name="product_id" readonly="1"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="qty" readonly="1"/>
+                                <field name="price" readonly="1"/>
+                                <field name="total" readonly="1"/>
+                                <field name="index_qty"/>
+                                <field name="index_price"/>
+                            </group>
+                            <group>
+                                <field name="qty_rap"/>
+                                <field name="price_rap"/>
+                                <field name="total_rap"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="RAB">
+                                <field name="rab_formula_line_ids">
+                                    <tree string="RAB" editable="bottom" readonly="1">
+                                        <field name="rab_pekerjaan_id"/>
+                                        <field name="qty"/>
+                                        <field name="price"/>
+                                        <field name="total"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- === DOWNLOAD RAB EXCEL === -->
+        <record model="ir.actions.server" id="model_bp_rab_rab_action_rpt_rab_excel">
+            <field name="name">Download RAB</field>
+            <field name="model_id" ref="model_bp_rab_rab"/>
+            <field name="binding_model_id" ref="model_bp_rab_rab"/>
+            <field name="binding_view_types">form</field>
+            <field name="state">code</field>
+            <field name="code">action = records.action_rpt_rab_excel()</field>
+        </record>
+
+        <!-- === DOWNLOAD RAM EXCEL === -->
+        <record model="ir.actions.server" id="model_bp_rab_rab_action_rpt_ram_excel">
+            <field name="name">Download RAM</field>
+            <field name="model_id" ref="model_bp_rab_rab"/>
+            <field name="binding_model_id" ref="model_bp_rab_rab"/>
+            <field name="binding_view_types">form</field>
+            <field name="state">code</field>
+            <field name="code">action = records.action_rpt_ram_excel()</field>
+        </record>
+
+        <!-- === DOWNLOAD RAJ EXCEL === -->
+        <record model="ir.actions.server" id="model_bp_rab_rab_action_rpt_raj_excel">
+            <field name="name">Download RAJ</field>
+            <field name="model_id" ref="model_bp_rab_rab"/>
+            <field name="binding_model_id" ref="model_bp_rab_rab"/>
+            <field name="binding_view_types">form</field>
+            <field name="state">code</field>
+            <field name="code">action = records.action_rpt_raj_excel()</field>
+        </record>
+
+    </data>
+</openerp>

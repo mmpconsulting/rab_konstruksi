@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- === INHERIT  PURCHASE  REQUEST === -->
+        <record id="bp_pr_purchase_request_list_rab" model="ir.ui.view">
+            <field name="name">bp_pr_purchase_request_list_rab</field>
+            <field name="model">bp_pr.purchase_request</field>
+            <field name="priority">10</field>
+            <field name="inherit_id" ref="bp_purchase_request.purchase_request_list"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="rab_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="bp_pr_purchase_request_form_rab" model="ir.ui.view">
+            <field name="name">bp_pr_purchase_request_form_rab</field>
+            <field name="model">bp_pr.purchase_request</field>
+            <field name="priority">10</field>
+            <field name="inherit_id" ref="bp_purchase_request.purchase_request_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="rab_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="bp_pr_purchase_request_filter_rab" model="ir.ui.view">
+            <field name="name">bp_pr_purchase_request_filter_rab</field>
+            <field name="model">bp_pr.purchase_request</field>
+            <field name="priority">10</field>
+            <field name="inherit_id" ref="bp_purchase_request.purchase_request_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="rab_id"/>
+                </xpath>
+                <xpath expr="//filter[@name='group_by_date_request']" position="after">
+                    <filter name="group_by_rab_id" string="RAB" context="{'group_by': 'rab_id'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- === INHERIT  PURCHASE  REQUEST LINE === -->
+        <record id="bp_pr_purchase_request_line_list_rab" model="ir.ui.view">
+            <field name="name">bp_pr_purchase_request_line_list_rab</field>
+            <field name="model">bp_pr.purchase_request_line</field>
+            <field name="priority">10</field>
+            <field name="inherit_id" ref="bp_purchase_request.purchase_request_line_list"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='purchase_request_id']" position="after">
+                    <field name="rab_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- bp_pr.purchase_request_line inherit form view -->
+        <record id="bp_pr_purchase_request_line_form_rab" model="ir.ui.view">
+            <field name="name">bp_pr_purchase_request_line_form_rab</field>
+            <field name="model">bp_pr.purchase_request_line</field>
+            <field name="priority">10</field>
+            <field name="inherit_id" ref="bp_purchase_request.purchase_request_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='purchase_request_id']" position="after">
+                    <field name="rab_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="bp_pr_purchase_request_line_filter_rab" model="ir.ui.view">
+            <field name="name">bp_pr_purchase_request_line_filter_rab</field>
+            <field name="model">bp_pr.purchase_request_line</field>
+            <field name="priority">10</field>
+            <field name="inherit_id" ref="bp_purchase_request.purchase_request_line_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='purchase_request_id']" position="after">
+                    <field name="rab_id"/>
+                </xpath>
+                <xpath expr="//filter[@name='group_by_purchase_request_id']" position="after">
+                    <filter name="group_by_rab_id" string="RAB" context="{'group_by': 'rab_id'}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

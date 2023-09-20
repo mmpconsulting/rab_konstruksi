@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <record id="stock_stock_scrap_form_view_rab" model="ir.ui.view">
+            <field name="name">stock_stock_scrap_form_view_rab</field>
+            <field name="model">stock.scrap</field>
+            <field name="priority">10</field>
+            <field name="inherit_id" ref="stock.stock_scrap_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="rab_id" options='{"no_quick_create": 1, "no_create_edit": 1}' attrs="{'readonly':[('state','=','done')]}"/>
+                </xpath>                
+            </field>
+        </record>
+
+        <record id="stock_stock_scrap_tree_view_rab" model="ir.ui.view">
+            <field name="name">stock_stock_scrap_tree_view_rab</field>
+            <field name="model">stock.scrap</field>
+            <field name="priority">10</field>
+            <field name="inherit_id" ref="stock.stock_scrap_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_done']" position="after">
+                    <field name="rab_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- stock.scrap inherit tree view -->
+        <record id="stock_stock_scrap_search_view_rab" model="ir.ui.view">
+            <field name="name">stock_stock_scrap_search_view_rab</field>
+            <field name="model">stock.scrap</field>
+            <field name="priority">10</field>
+            <field name="inherit_id" ref="stock.stock_scrap_search_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="rab_id"/>
+                </xpath>
+                <xpath expr="//filter[@name='product']" position="before">
+                    <filter name="group_by_rab_id" string="RAB" context="{'group_by': 'rab_id'}"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

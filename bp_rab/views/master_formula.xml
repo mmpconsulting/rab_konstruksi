@@ -1,0 +1,103 @@
+<openerp>
+    <data>
+        <record id="master_formula_list" model="ir.ui.view">
+            <field name="name">master_formula_list</field>
+            <field name="model">bp_rab.master_formula</field>
+            <field name="arch" type="xml">
+                <tree string="Formula">
+                    <field name="name"/>
+                    <field name="number"/>
+                    <field name="master_category_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="master_formula_form" model="ir.ui.view">
+            <field name="name">master_formula_form</field>
+            <field name="model">bp_rab.master_formula</field>
+            <field name="arch" type="xml">
+                <form string="Formula">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h4><field name="name"/></h4>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="number"/>
+                                <field name="margin"/>
+                            </group>
+                            <group>
+                                <field name="master_category_id" options='{"no_quick_create": 1, "no_create_edit": 1}'/>
+                                <field name="id" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Detail Formula">
+                                <button string="Compute All" type="object" class="oe_highlight" name="compute_formula"></button>
+                                <field name="master_formula_line_ids">
+                                    <tree string="Detail" editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="group_id" options='{"no_quick_create": 1, "no_create_edit": 1, "no_open":1}' optional="show"/>
+                                        <field name="product_id" options='{"no_quick_create": 1, "no_create_edit": 1}'/>
+                                        <field name="name" optional="show"/>
+                                        <field name="code"/>
+                                        <field name="category_id" options='{"no_quick_create": 1, "no_create_edit": 1, "no_open":1}' optional="show"/>
+                                        <field name="formula" string="Rumus" />
+                                        <field name="qty" digits="[14, 4]"/>
+                                        <field name="uom_id" optional="show"/>
+                                        <field name="price"/>
+                                        <field name="total"/>
+                                        <button string="Compute" type="object" class="oe_highlight" name="compute_formula" attrs="{'invisible':[('formula','=',False)]}"></button>
+                                        <field name="master_formula_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <field name="jumlah"/>
+                                    <field name="margin_value"/>
+                                    <field name="hsp" class="oe_subtotal_footer_separator"/>
+                                </group>
+                            </page>
+                            <page string="Detail Category">
+                                <button string="Compute All" type="object" class="oe_highlight" name="compute_formula_category"></button>
+                                <field name="master_formula_master_category_ids">
+                                    <tree string="Category" editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name"/>
+                                        <field name="code"/>
+                                        <field name="formula"/>
+                                        <field name="value" digits="[14, 4]"/>
+                                        <field name="uom_id" options='{"no_quick_create": 1, "no_create_edit": 1, "no_open":1}'/>
+                                        <button string="Compute" type="object" class="oe_highlight" name="compute_formula" attrs="{'invisible':[('formula','=',False)]}"></button>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="master_formula_filter" model="ir.ui.view">
+            <field name="name">master_formula_filter</field>
+            <field name="model">bp_rab.master_formula</field>
+            <field name="arch" type="xml">
+                <search string="Search Formula">
+                    <field name="name"/>
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="group_by_master_category_id" string="Category" context="{'group_by': 'master_category_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_master_formula_list">
+            <field name="name">Formula</field>
+            <field name="res_model">bp_rab.master_formula</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</openerp>

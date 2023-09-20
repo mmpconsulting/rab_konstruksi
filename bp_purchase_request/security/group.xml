@@ -1,0 +1,17 @@
+<openerp>
+	<data noupdate="0">
+        <record model="ir.module.category" id="bp_purchase_request.module_category_bp_purchase_request">
+            <field name="name">Purchase Request</field>
+        </record>
+
+		<record id="bp_pr_administrator" model="res.groups">
+			<field name="name">Administrator</field>
+			<field name="category_id" ref="bp_purchase_request.module_category_bp_purchase_request"/>
+        </record>
+        <record id="bp_pr_user" model="res.groups">
+			<field name="name">User</field>
+			<field name="category_id" ref="bp_purchase_request.module_category_bp_purchase_request"/>
+        </record>
+
+    </data>
+</openerp>

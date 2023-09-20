@@ -1,0 +1,12 @@
+<odoo>
+    <data>
+        <record id="seq_bp_pr_purchase_request" model="ir.sequence">
+            <field name="name">Purchase Request</field>
+            <field name="code">bp_pr.purchase_request</field>
+            <field name="prefix">PR-%(y)s%(month)s</field>
+            <field name="padding">3</field>
+            <field name="use_date_range">True</field>
+            <field name="range_reset">monthly</field>
+        </record>
+    </data>
+</odoo>

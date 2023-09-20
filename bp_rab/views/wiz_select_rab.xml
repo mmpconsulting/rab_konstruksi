@@ -1,0 +1,29 @@
+<openerp>
+    <data>
+        <record id="wiz_select_rab_list" model="ir.ui.view">
+            <field name="name">wiz_select_rab_form</field>
+            <field name="model">bp_rab.wiz_select_rab</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Select RAB">
+                    <group>
+                        <field name="rab_id" invisible="1"/>
+                        <field name="formula_id" invisible="1"/>
+                        <field name="rab_pekerjaan_ids" domain="[('rab_id','=',rab_id),('formula_id','=',False)]"/>
+                    </group>
+                    <footer>
+                        <button type="object" name="save" string="Save" class="oe_highlight"/>
+                        <button type="special" special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wiz_select_rab">
+            <field name="name">Select RAB</field>
+            <field name="res_model">bp_rab.wiz_select_rab</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</openerp>

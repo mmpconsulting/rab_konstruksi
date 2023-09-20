@@ -1,0 +1,90 @@
+<openerp>
+    <data>
+        <record id="v_rab_product_list" model="ir.ui.view">
+            <field name="name">v_rab_product_list</field>
+            <field name="model">bp_rab_pr.v_rab_product</field>
+            <field name="arch" type="xml">
+                <tree string="RAM" create="false" edit="false" delete="false">
+                    <field name="rab_date"/>
+                    <field name="rab_id"/>
+                    <field name="product_id"/>
+                    <field name="price"/>
+                    <field name="qty_rab" sum="Total"/>
+                    <field name="qty_rap" sum="Total"/>
+                    <field name="qty_request" sum="Total"/>
+                    <field name="qty_po" sum="Total"/>
+                    <field name="qty_receipt" sum="Total"/>
+                    <field name="qty_consume" sum="Total"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="v_rab_product_form" model="ir.ui.view">
+            <field name="name">v_rab_product_form</field>
+            <field name="model">bp_rab_pr.v_rab_product</field>
+            <field name="arch" type="xml">
+                <form string="RAM" create="false" edit="false" delete="false">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" type="object" name="show_purchase_request_line" icon="fa-shopping-cart">
+                                <field string="P. Request" name="qty_purchase_request_line" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="rab_id"/>
+                                <field name="product_id"/>
+                                <field name="price"/>
+                            </group>
+                            <group>
+                                <field name="qty_rab"/>
+                                <field name="qty_rap"/>
+                                <field name="qty_request"/>
+                                <field name="qty_po"/>
+                                <field name="qty_receipt"/>
+                                <field name="qty_consume"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="RAB">
+                                <field name="rab_formula_line_ids">
+                                    <tree string="RAB" editable="bottom">
+                                        <field name="rab_pekerjaan_id"/>
+                                        <field name="qty"/>
+                                        <field name="price"/>
+                                        <field name="total"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="v_rab_product_filter" model="ir.ui.view">
+            <field name="name">v_rab_product_filter</field>
+            <field name="model">bp_rab_pr.v_rab_product</field>
+            <field name="arch" type="xml">
+                <search string="Search RAM">
+                    <filter name="state_rab" string="RAB" domain="[('state','=','rab')]"/>
+                    <field name="product_id"/>
+                    <field name="rab_id"/>
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="group_by_rab_id" string="RAB" context="{'group_by': 'rab_id'}"/>
+                        <filter name="group_by_state" string="State" context="{'group_by': 'state'}"/>
+                        <filter name="group_by_rab_date" string="RAB Date" context="{'group_by': 'rab_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_v_rab_product_list">
+            <field name="name">RAM</field>
+            <field name="res_model">bp_rab_pr.v_rab_product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{"search_default_state_rab":1, "search_default_group_by_rab_id":1}</field>
+        </record>
+    </data>
+</openerp>

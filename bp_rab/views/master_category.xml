@@ -1,0 +1,73 @@
+<openerp>
+    <data>
+        <record id="master_category_list" model="ir.ui.view">
+            <field name="name">master_category_list</field>
+            <field name="model">bp_rab.master_category</field>
+            <field name="arch" type="xml">
+                <tree string="Category">
+                    <field name="name"/>
+                    <field name="number"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="master_category_form" model="ir.ui.view">
+            <field name="name">master_category_form</field>
+            <field name="model">bp_rab.master_category</field>
+            <field name="arch" type="xml">
+                <form string="Category">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1><field name="name"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="number"/>
+                                <field name="description"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Detail">
+                                <button string="Compute All" type="object" class="oe_highlight" name="compute_formula"></button>
+                                <field name="master_category_line_ids">
+                                    <tree string="Detail" editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name"/>
+                                        <field name="code"/>
+                                        <field name="formula"/>
+                                        <field name="value" digits="[14, 4]"/>
+                                        <field name="uom_id" options='{"no_quick_create": 1, "no_create_edit": 1, "no_open":1}'/>
+                                        <button string="Compute" type="object" class="oe_highlight" name="compute_formula" attrs="{'invisible':[('formula','=',False)]}"></button>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="master_category_filter" model="ir.ui.view">
+            <field name="name">master_category_filter</field>
+            <field name="model">bp_rab.master_category</field>
+            <field name="arch" type="xml">
+                <search string="Search Category">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_master_category_list">
+            <field name="name">Category</field>
+            <field name="res_model">bp_rab.master_category</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</openerp>

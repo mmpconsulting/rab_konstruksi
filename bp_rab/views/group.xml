@@ -1,0 +1,194 @@
+<openerp>
+    <data>
+        <!-- === Group Formula === -->
+        <record id="group_formula_list" model="ir.ui.view">
+            <field name="name">group_formula_list</field>
+            <field name="model">bp_rab.group</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <tree string="Group">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="group_formula_form" model="ir.ui.view">
+            <field name="name">group_formula_form</field>
+            <field name="model">bp_rab.group</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <form string="Group">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="tag" invisible="1"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="group_formula_filter" model="ir.ui.view">
+            <field name="name">group_formula_filter</field>
+            <field name="model">bp_rab.group</field>
+            <field name="arch" type="xml">
+                <search string="Search Group">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_group_formula_list">
+            <field name="name">Group Formula Description</field>
+            <field name="res_model">bp_rab.group</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('tag','=','formula')]</field>
+            <field name="context">{'default_tag':'formula'}</field>
+        </record>
+        <record model="ir.actions.act_window.view" id="action_group_formula_list_tree">
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="group_formula_list"/>
+            <field name="act_window_id" ref="action_group_formula_list"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="action_group_formula_list_form">
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="group_formula_form"/>
+            <field name="act_window_id" ref="action_group_formula_list"/>
+        </record>
+
+        <!-- === Category Formula === -->
+        <record id="category_formula_list" model="ir.ui.view">
+            <field name="name">category_formula_list</field>
+            <field name="model">bp_rab.group</field>
+            <field name="priority">3</field>
+            <field name="arch" type="xml">
+                <tree string="Category">
+                    <field name="name" string="Category"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="category_formula_form" model="ir.ui.view">
+            <field name="name">category_formula_form</field>
+            <field name="model">bp_rab.group</field>
+            <field name="priority">3</field>
+            <field name="arch" type="xml">
+                <form string="Category">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" string="Category"/>
+                                <field name="tag" invisible="1"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="category_formula_filter" model="ir.ui.view">
+            <field name="name">category_formula_filter</field>
+            <field name="model">bp_rab.group</field>
+            <field name="arch" type="xml">
+                <search string="Search Category">
+                    <field name="name" string="Category"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_category_formula_list">
+            <field name="name">Category Formula Description</field>
+            <field name="res_model">bp_rab.group</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('tag','=','category')]</field>
+            <field name="context">{'default_tag':'category'}</field>
+        </record>
+        <record model="ir.actions.act_window.view" id="action_category_formula_list_tree">
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="category_formula_list"/>
+            <field name="act_window_id" ref="action_category_formula_list"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="action_category_formula_list_form">
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="category_formula_form"/>
+            <field name="act_window_id" ref="action_category_formula_list"/>
+        </record>
+
+        <!-- === Group RAB === -->
+        <record id="group_rab_list" model="ir.ui.view">
+            <field name="name">group_rab_list</field>
+            <field name="model">bp_rab.group</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <tree string="Group">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="group_rab_form" model="ir.ui.view">
+            <field name="name">group_rab_form</field>
+            <field name="model">bp_rab.group</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <form string="Group">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="tag" invisible="1"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Sub Group">
+                                <field name="group_line_ids">
+                                    <tree string="Sub Group" editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="group_rab_filter" model="ir.ui.view">
+            <field name="name">group_rab_filter</field>
+            <field name="model">bp_rab.group</field>
+            <field name="arch" type="xml">
+                <search string="Search Group">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_group_rab_list">
+            <field name="name">Group RAB Description</field>
+            <field name="res_model">bp_rab.group</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('tag','=','rab')]</field>
+            <field name="context">{'default_tag':'rab'}</field>
+        </record>
+        <record model="ir.actions.act_window.view" id="action_group_rab_list_tree">
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="group_rab_list"/>
+            <field name="act_window_id" ref="action_group_rab_list"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="action_group_rab_list_form">
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="group_rab_form"/>
+            <field name="act_window_id" ref="action_group_rab_list"/>
+        </record>
+
+    </data>
+</openerp>

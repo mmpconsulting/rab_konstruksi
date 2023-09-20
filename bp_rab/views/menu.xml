@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <menuitem id="rab" name="Projects" sequence="1" web_icon="bp_rab,static/description/icon.png"/>
+  	    
+        <menuitem parent="rab" sequence="9" id="rab_conf" name="Configuration"/>
+        <menuitem parent="rab_conf" sequence="2" id="rab_conf_product" name="Product" action="stock.product_template_action_product"/>
+        <menuitem parent="rab_conf" sequence="3" id="rab_conf_category" name="Master Category" action="action_master_category_list"/>
+        <menuitem parent="rab_conf" sequence="4" id="rab_conf_formula" name="Master Formula" action="action_master_formula_list"/>
+        <menuitem parent="rab_conf" sequence="5" id="rab_conf_group_formula" name="Group Formula Description" action="action_group_formula_list"/>
+        <menuitem parent="rab_conf" sequence="6" id="rab_conf_category_formula" name="Category Formula Description" action="action_category_formula_list"/>
+        <menuitem parent="rab_conf" sequence="7" id="rab_conf_group_rab" name="Group RAB Description" action="action_group_rab_list"/>
+        
+        <menuitem parent="rab" sequence="1" id="rab_trans" name="Transaction"/>
+        <menuitem parent="rab_trans" sequence="1" id="rab_trans_rab" name="Projects" action="action_rab_list"/>
+        <menuitem parent="rab_trans" sequence="2" id="rab_trans_formula" name="Formula" action="action_rab_formula_list"/>
+    </data>
+</odoo>

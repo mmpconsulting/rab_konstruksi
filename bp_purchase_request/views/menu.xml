@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <menuitem id="pr" name="Purchase Request" sequence="1" web_icon="bp_purchase_request,static/description/icon.png"/>
+        <menuitem parent="pr" sequence="1" id="pr_trans" name="Transaction"/>
+        <menuitem parent="pr_trans" sequence="1" id="pr_trans_purchase_request" name="Purchase Request" action="action_purchase_request_list"/>
+        <menuitem parent="pr_trans" sequence="2" id="pr_trans_purchase_request_line" name="Purchase Request Line" action="action_purchase_request_line_list"/>
+    </data>
+</odoo>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+    <record id="bp_rab_rab_form_pr" model="ir.ui.view">
+        <field name="name">bp_rab_rab_form_pr</field>
+        <field name="model">bp_rab.rab</field>
+        <field name="priority">10</field>
+        <field name="inherit_id" ref="bp_rab.rab_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_finish']" position="before">
+                <button string="Create Purchase Request" type="action" class="oe_highlight" name="%(action_wiz_generate_purchase_request)d" states="rab"></button>
+            </xpath>
+            <xpath expr="//button[@name='show_sale_order']" position="after">
+                <button class="oe_stat_button" type="object" name="show_purchase_request" icon="fa-shopping-cart" attrs="{'invisible':[('qty_purchase_request','=',0)]}">
+                    <field string="P. Request" name="qty_purchase_request" widget="statinfo"/>
+                </button>
+                <button class="oe_stat_button" type="object" name="show_purchase_order" icon="fa-credit-card" attrs="{'invisible':[('qty_purchase_order','=',0)]}">
+                    <field string="P. Order" name="qty_purchase_order" widget="statinfo"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    </data>
+</odoo>

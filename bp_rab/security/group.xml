@@ -1,0 +1,13 @@
+<openerp>
+	<data noupdate="0">
+        <record model="ir.module.category" id="bp_rab.module_category_bp_rab">
+            <field name="name">RAB</field>
+        </record>
+
+		<record id="bp_rab_administrator" model="res.groups">
+			<field name="name">Administrator</field>
+			<field name="category_id" ref="bp_rab.module_category_bp_rab"/>
+        </record>
+
+    </data>
+</openerp>

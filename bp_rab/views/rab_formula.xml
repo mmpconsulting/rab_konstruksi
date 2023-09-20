@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <record id="rab_formula_list" model="ir.ui.view">
+            <field name="name">rab_formula_list</field>
+            <field name="model">bp_rab.rab</field>
+            <field name="priority">3</field>
+            <field name="arch" type="xml">
+                <tree string="Formula" create="false" delete="false">
+                    <field name="rab_date" string = "Date"/>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="number"/>
+                    <field name="lokasi"/>
+                    <field name="total" sum="Grand Total"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="rab_formula_form" model="ir.ui.view">
+            <field name="name">rab_formula_form</field>
+            <field name="model">bp_rab.rab</field>
+            <field name="priority">3</field>
+            <field name="arch" type="xml">
+                <form string="Formula" create="false" delete="false">
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,rab,finish"/>
+                    </header>
+                    <sheet>
+                        <field name="id" invisible="1"/>
+                        <div name="name" class="oe_title">
+                            <label for="name" class="oe_edit_only" string="Pekerjaan"/>
+                            <h1><field name="name" readonly="1"/></h1>
+                            <field name="number" readonly="1"/>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="rab_date" readonly="1"/>
+                                <field name="partner_id" readonly="1"/>
+                                <field name="lokasi" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="due_date" readonly="1"/>
+                                <field name="total"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Formula">
+                                <field name="formula_ids" context="{'form_view_ref':'bp_rab.formula_form'}" 
+                                    attrs="{'readonly':[('state','!=','draft')]}">
+                                    <tree string="Formula">
+                                        <field name="name"/>
+                                        <field name="margin" optional="show"/>
+                                        <field name="jumlah" optional="show"/>
+                                        <field name="margin_value" optional="show"/>
+                                        <field name="hsp"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Price">
+                                <button string="Get Price" type="object" class="oe_highlight" name="get_price" attrs="{'invisible':[('state','!=','draft')]}"></button> <![CDATA[&nbsp;]]>
+                                <button string="Update Price" type="object" class="oe_highlight" name="update_price" attrs="{'invisible':[('state','!=','draft')]}"></button>
+                                <field name="formula_product_ids" attrs="{'readonly':[('state','!=','draft')]}">
+                                    <tree string="Price" create="false" delete="false" editable="bottom">
+                                        <field name="product_id" readonly="1"/>
+                                        <field name="type"/>
+                                        <field name="uom_id"/>
+                                        <field name="price"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="RAB">
+                                <field name="rab_pekerjaan_ids" context="{'default_rab_id':id, 'form_view_ref':'bp_rab.rab_pekerjaan_formula_form'}" 
+                                    attrs="{'readonly':[('state','!=','draft')]}">
+                                    <tree string="RAB" create="false" delete="false" decoration-danger="formula_id==False">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="group_id" optional="hide"/>
+                                        <field name="group_line_id" optional="show"/>
+                                        <field name="name"/>
+                                        <field name="kode_gambar" optional="hide"/>
+                                        <field name="spesifikasi" optional="hide"/>
+                                        <field name="formula_id"/>
+                                        <field name="panjang" optional="hide"/>
+                                        <field name="lebar" optional="hide"/>
+                                        <field name="tinggi" optional="hide"/>
+                                        <field name="unit" optional="hide"/>
+                                        <field name="volume" optional="hide"/>
+                                        <field name="index" optional="hide"/>
+                                        <field name="volume_akhir"/>
+                                        <field name="hsp"/>
+                                        <field name="total"/>
+                                        <field name="bobot"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="rab_formula_filter" model="ir.ui.view">
+            <field name="name">rab_formula_filter</field>
+            <field name="model">bp_rab.rab</field>
+            <field name="priority">3</field>
+            <field name="arch" type="xml">
+                <search string="Search Formula">
+                    <filter name="state_draft" string="Draft" domain="[('state','=','draft')]"/>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="number"/>
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="group_by_rab_date" string="Date" context="{'group_by': 'rab_date'}"/>
+                        <filter name="group_by_state" string="State" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_rab_formula_list">
+            <field name="name">Formula</field>
+            <field name="res_model">bp_rab.rab</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="rab_formula_filter"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="action_rab_formula_list_tree">
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="rab_formula_list"/>
+            <field name="act_window_id" ref="action_rab_formula_list"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="action_rab_formula_list_form">
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="rab_formula_form"/>
+            <field name="act_window_id" ref="action_rab_formula_list"/>
+        </record>
+
+        <!-- === rab_pekerjaan (Formula)=== -->
+        <record id="rab_pekerjaan_formula_form" model="ir.ui.view">
+            <field name="name">rab_pekerjaan_formula_form</field>
+            <field name="model">bp_rab.rab_pekerjaan</field>
+            <field name="priority">3</field>
+            <field name="arch" type="xml">
+                <form string="RAB">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="group_id" readonly="1"/>
+                                <field name="group_line_id" readonly="1"/>
+                                <field name="name" readonly="1"/>
+                                <field name="kode_gambar" readonly="1"/>
+                                <field name="spesifikasi" readonly="1"/>
+                                <field name="formula_id" options='{"no_quick_create": 1, "no_create_edit": 1}' domain="[('rab_id','=',rab_id)]"/>
+                                <field name="bobot" readonly="1"/>
+                                <field name="rab_id" invisible="1"/>      
+                            </group>
+                            <group>
+                                <field name="panjang"/>
+                                <field name="lebar"/>
+                                <field name="tinggi"/>
+                                <field name="unit"/>
+                                <field name="volume"/>
+                                <field name="index"/>
+                                <separator/>
+                                <field name="volume_akhir"/>
+                                <field name="hsp"/>
+                                <field name="total" class="oe_subtotal_footer_separator"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="rab_pekerjaan_list" model="ir.ui.view">
+            <field name="name">rab_pekerjaan_list</field>
+            <field name="model">bp_rab.rab_pekerjaan</field>
+            <field name="arch" type="xml">
+                <tree string="Item Pekerjaan">
+                    <field name="group_id" optional="show"/>
+                    <field name="group_line_id" optional="show"/>
+                    <field name="name"/>
+                    <field name="kode_gambar" optional="hide"/>
+                    <field name="spesifikasi" optional="show"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

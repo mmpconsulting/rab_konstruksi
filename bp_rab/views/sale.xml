@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+    <record id="sale_view_order_form_rab" model="ir.ui.view">
+        <field name="name">sale_view_order_form_rab</field>
+        <field name="model">sale.order</field>
+        <field name="priority">10</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="rab_id" domain="[('partner_id','=',partner_id), ('state','in',['rab','finish'])]" options='{"no_quick_create": 1, "no_create_edit": 1}'/>
+            </xpath>
+        </field>
+    </record>
+
+    </data>
+</odoo>

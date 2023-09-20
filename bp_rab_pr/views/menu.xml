@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <menuitem parent="bp_rab.rab_trans" sequence="3" id="rab_trans_ram" name="RAM" action="action_v_rab_product_list"/>
+    </data>
+</odoo>

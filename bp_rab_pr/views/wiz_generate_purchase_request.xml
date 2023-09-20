@@ -1,0 +1,48 @@
+<openerp>
+    <data>
+        <record id="wiz_generate_purchase_request_list" model="ir.ui.view">
+            <field name="name">wiz_generate_purchase_request_form</field>
+            <field name="model">bp_rab_pr.wiz_generate_purchase_request</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Generate Purchase Request">
+                    <group>
+                        <group>
+                            <field name="rab_id" readonly="1"/>
+                            <field name="date_request"/>
+                            <field name="user_request_id"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Purchase Request Line">
+                            <field name="wiz_generate_purchase_request_line_ids">
+                                <tree string="Purchase Request Line" editable="bottom" create="false">
+                                    <field name="product_id"/>
+                                    <field name="name"/>
+                                    <field name="uom_id" options='{"no_quick_create": 1, "no_create_edit": 1, "no_open":1}' readonly="1"/>
+                                    <field name="qty_rab" readonly="1"/>
+                                    <field name="qty_request"/>
+                                    <field name="rab_product_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button type="object" name="save" string="Create" class="oe_highlight"/>
+                        <button type="special" special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wiz_generate_purchase_request">
+            <field name="name">Generate Purchase Request</field>
+            <field name="res_model">bp_rab_pr.wiz_generate_purchase_request</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="bp_rab_pr.model_bp_rab_pr_v_rab_product" />
+        </record>
+    </data>
+</openerp>

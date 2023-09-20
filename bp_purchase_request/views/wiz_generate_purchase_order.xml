@@ -1,0 +1,48 @@
+<openerp>
+    <data>
+        <record id="wiz_generate_purchase_order_list" model="ir.ui.view">
+            <field name="name">wiz_generate_purchase_order_form</field>
+            <field name="model">bp_pr.wiz_generate_purchase_order</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Generate RFQ">
+                    <group>
+                        <group>
+                            <field name="date_po"/>
+                            <field name="partner_id"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="RFQ Line">
+                            <field name="wiz_generate_purchase_order_line_ids">
+                                <tree string="RFQ Line" editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="name"/>
+                                    <field name="uom_id" options='{"no_quick_create": 1, "no_create_edit": 1, "no_open":1}' readonly="1"/>
+                                    <field name="qty_request" readonly="1"/>
+                                    <field name="qty_rfq"/>
+                                    <field name="purchase_request_line_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button type="object" name="save" string="Create" class="oe_highlight"/>
+                        <button type="special" special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wiz_generate_purchase_order">
+            <field name="name">Generate RFQ</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">bp_pr.wiz_generate_purchase_order</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="bp_purchase_request.model_bp_pr_purchase_request_line" />
+        </record>
+    </data>
+</openerp>

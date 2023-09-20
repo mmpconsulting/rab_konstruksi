@@ -1,0 +1,205 @@
+<openerp>
+    <data>
+        <record id="formula_list" model="ir.ui.view">
+            <field name="name">formula_list</field>
+            <field name="model">bp_rab.formula</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <tree string="Formula">
+                    <field name="rab_id"/>
+                    <field name="name"/>
+                    <field name="margin" optional="show"/>
+                    <field name="jumlah" optional="show"/>
+                    <field name="margin_value" optional="show"/>
+                    <field name="hsp"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="formula_form" model="ir.ui.view">
+            <field name="name">formula_form</field>
+            <field name="model">bp_rab.formula</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <form string="Formula">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only" string="Name"/>
+                            <h1><field name="name"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="rab_id"/>
+                                <field name="master_formula_id" options='{"no_quick_create": 1, "no_create_edit": 1}'/>
+                                <field name="master_category_id" options='{"no_quick_create": 1, "no_create_edit": 1}'/>
+                            </group>
+                            <group>
+                                <field name="margin"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Detail">
+                                <field name="formula_line_ids">
+                                    <button string="Compute All" type="object" class="oe_highlight" name="compute_formula"></button>
+                                    <tree string="Detail" editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="group_id" options='{"no_quick_create": 1, "no_create_edit": 1, "no_open":1}' optional="show"/>
+                                        <field name="product_id" options='{"no_quick_create": 1, "no_create_edit": 1}'/>
+                                        <field name="name" optional="show"/>
+                                        <field name="code"/>
+                                        <field name="category_id" options='{"no_quick_create": 1, "no_create_edit": 1, "no_open":1}' optional="show"/>
+                                        <field name="formula"/>
+                                        <field name="qty" digits="[14, 4]"/>
+                                        <field name="uom_id" optional="show"/>
+                                        <field name="price"/>
+                                        <field name="total"/>
+                                        <button string="Compute" type="object" class="oe_highlight" name="compute_formula" attrs="{'invisible':[('formula','=',False)]}"></button>
+                                        <field name="formula_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <field name="jumlah"/>
+                                    <field name="margin_value"/>
+                                    <field name="hsp" class="oe_subtotal_footer_separator"/>
+                                </group>
+                            </page>
+                            <page string="Category">
+                                <field name="formula_category_ids">
+                                    <button string="Compute All" type="object" class="oe_highlight" name="compute_formula_category"></button>
+                                    <tree string="Category" editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name"/>
+                                        <field name="code"/>
+                                        <field name="formula"/>
+                                        <field name="value" digits="[14, 4]"/>
+                                        <field name="uom_id" options='{"no_quick_create": 1, "no_create_edit": 1, "no_open":1}'/>
+                                        <button string="Compute" type="object" class="oe_highlight" name="compute_formula" attrs="{'invisible':[('formula','=',False)]}"></button>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="RAB">
+                                <button string="Select RAB" type="action" class="oe_highlight" name="%(action_wiz_select_rab)d" context="{'default_rab_id':rab_id, 'default_formula_id':id}"></button>
+                                <field name="rab_pekerjaan_ids">
+                                    <tree string="RAB" editable="bottom" create="false" edit="false" delete="false">
+                                        <field name="group_id" optional="show"/>
+                                        <field name="group_line_id" optional="show"/>
+                                        <field name="name"/>
+                                        <field name="kode_gambar" optional="hide"/>
+                                        <field name="spesifikasi" optional="hide"/>
+                                        <field name="panjang" optional="hide"/>
+                                        <field name="lebar" optional="hide"/>
+                                        <field name="tinggi" optional="hide"/>
+                                        <field name="unit" optional="hide"/>
+                                        <field name="volume" optional="hide"/>
+                                        <field name="index" optional="hide"/>
+                                        <field name="volume_akhir"/>
+                                        <field name="hsp"/>
+                                        <field name="total"/>
+                                        <field name="bobot"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="formula_filter" model="ir.ui.view">
+            <field name="name">formula_filter</field>
+            <field name="model">bp_rab.formula</field>
+            <field name="arch" type="xml">
+                <search string="Search Formula">
+                    <field name="name"/>
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="group_by_rab_id" string="RAB" context="{'group_by': 'rab_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_formula_list">
+            <field name="name">Formula</field>
+            <field name="res_model">bp_rab.formula</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record model="ir.actions.act_window.view" id="action_formula_list_tree">
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="formula_list"/>
+            <field name="act_window_id" ref="action_formula_list"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="action_formula_list_form">
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="formula_form"/>
+            <field name="act_window_id" ref="action_formula_list"/>
+        </record>
+
+        <!-- === RAB === -->
+        <record id="formula_rab_form" model="ir.ui.view">
+            <field name="name">formula_rab_form</field>
+            <field name="model">bp_rab.formula</field>
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+                <form string="Formula">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only" string="Name"/>
+                            <h1><field name="name"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="master_formula_id" options='{"no_quick_create": 1, "no_create_edit": 1}'/>
+                                <field name="master_category_id" options='{"no_quick_create": 1, "no_create_edit": 1}'/>
+                            </group>
+                            <group>
+                                <field name="margin"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Detail Formula">
+                                <button string="Compute All" type="object" class="oe_highlight" name="compute_formula"></button>
+                                <field name="formula_line_ids">
+                                    <tree string="Detail" editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="group_id" options='{"no_quick_create": 1, "no_create_edit": 1, "no_open":1}' optional="show"/>
+                                        <field name="product_id" options='{"no_quick_create": 1, "no_create_edit": 1}'/>
+                                        <field name="name" optional="show"/>
+                                        <field name="code"/>
+                                        <field name="category_id" options='{"no_quick_create": 1, "no_create_edit": 1, "no_open":1}' optional="show"/>
+                                        <field name="formula"/>
+                                        <field name="qty" digits="[14, 4]"/>
+                                        <field name="uom_id" optional="show"/>
+                                        <field name="price"/>
+                                        <field name="total"/>
+                                        <button string="Compute" type="object" class="oe_highlight" name="compute_formula" attrs="{'invisible':[('formula','=',False)]}"></button>
+                                        <field name="formula_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <field name="jumlah"/>
+                                    <field name="margin_value"/>
+                                    <field name="hsp" class="oe_subtotal_footer_separator"/>
+                                </group>
+                            </page>
+                            <page string="Detail Category">
+                                <button string="Compute All" type="object" class="oe_highlight" name="compute_formula_category"></button>
+                                <field name="formula_category_ids">
+                                    <tree string="Category" editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name"/>
+                                        <field name="code"/>
+                                        <field name="formula"/>
+                                        <field name="value" digits="[14, 4]"/>
+                                        <field name="uom_id" options='{"no_quick_create": 1, "no_create_edit": 1, "no_open":1}'/>
+                                        <button string="Compute" type="object" class="oe_highlight" name="compute_formula" attrs="{'invisible':[('formula','=',False)]}"></button>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>
